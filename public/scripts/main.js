@@ -124,7 +124,7 @@ function renderFilmDetails(filmId, film) {
   if (reviews.length > 0) {
     reviews.forEach((review, index) => {
       const reviewP = document.createElement('p');
-      reviewP.textContent = `${review.review} - ${review.rating} stars`;
+      reviewP.textContent = review.review;
       const deleteReviewBtn = document.createElement('button');
 
       if (reviewIDs.includes(review.ratingID)) {
@@ -170,9 +170,6 @@ async function renderFilms(films) {
     filmImg.alt = 'Film Cover Image';
     filmImg.height = 320;
     filmImg.width = 240;
-    filmImg.addEventListener('click', () => {
-      window.location.href = `/film/${film.filmID}`;
-    });
     filmItem.appendChild(filmImg);
 
     const detailsDiv = document.createElement('div');

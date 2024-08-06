@@ -48,22 +48,4 @@ async function getUserReviewIds(userID) {
   }
 }
 
-async function getFilmIdByName(filmname) {
-  const pool = await getPool();
-  try {
-    const result = await pool
-      .request()
-      .input('filmname', sql.NVarChar, filmname)
-      .query('SELECT filmID FROM films WHERE title = @filmname');
-
-    if (result.recordset.length > 0) {
-      return result.recordset[0].filmID;
-    }
-    return null;
-  } catch (err) {
-    console.error('Error fetching film ID:', err);
-    throw err;
-  }
-}
-
-export { addReview, getUserReviewIds, getFilmIdByName };
+export { addReview, getUserReviewIds };

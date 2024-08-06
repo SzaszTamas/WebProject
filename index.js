@@ -24,7 +24,7 @@ const startServer = async () => {
 
     app.use(
       session({
-        secret: 'secret',
+        secret: 'your_secret_key',
         resave: false,
         saveUninitialized: true,
       }),

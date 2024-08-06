@@ -50,7 +50,7 @@ router.post('/register', async (req, res) => {
   try {
     await createUser(username, password);
     req.flash('success', 'Registration successful! You can now log in.');
-    res.redirect('/login');
+    res.redirect('/register');
   } catch (err) {
     req.flash('error', 'Error registering user');
     res.redirect('/register');
@@ -76,6 +76,7 @@ router.get('/logout', (req, res, next) => {
       return next(err);
     }
     res.redirect('/');
+    return null;
   });
 });
 

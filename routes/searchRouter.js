@@ -1,5 +1,5 @@
 import express from 'express';
-import { searchFilms, deleteReviewById, deleteGenreById, deletePlotById, getFilmById } from '../database/searchdb.js';
+import { searchFilms, deleteReviewById, deleteGenreById, deletePlotById } from '../database/searchdb.js';
 import { getUserReviewIds } from '../database/reviewdb.js';
 import { ensureAuthenticated } from '../middleware/authMiddleware.js';
 
@@ -20,18 +20,7 @@ router.post('/search-films', async (req, res) => {
   }
 });
 
-router.get('/film/:filmID', async (req, res) => {
-  const { filmID } = req.params;
-  try {
-    const film = await getFilmById(filmID);
-    res.render('film', { film });
-  } catch (err) {
-    console.error('Error retrieving film:', err);
-    res.status(500).json({ error: 'Error retrieving film' });
-  }
-});
-
-router.delete('/delete-review/:filmId/:reviewIndex', ensureAuthenticated, async (req, res) => {
+router.delete('/delete-review/:filmId/:reviewIndex', async (req, res) => {
   try {
     const { filmId, reviewIndex } = req.params;
     await deleteReviewById(filmId, reviewIndex);
@@ -42,7 +31,7 @@ router.delete('/delete-review/:filmId/:reviewIndex', ensureAuthenticated, async 
   }
 });
 
-router.delete('/delete-genre/:filmId', ensureAuthenticated, async (req, res) => {
+router.delete('/delete-genre/:filmId', async (req, res) => {
   try {
     const { filmId } = req.params;
     await deleteGenreById(filmId);
@@ -53,7 +42,7 @@ router.delete('/delete-genre/:filmId', ensureAuthenticated, async (req, res) => 
   }
 });
 
-router.delete('/delete-plot/:filmId', ensureAuthenticated, async (req, res) => {
+router.delete('/delete-plot/:filmId', async (req, res) => {
   try {
     const { filmId } = req.params;
     await deletePlotById(filmId);
@@ -65,12 +54,17 @@ router.delete('/delete-plot/:filmId', ensureAuthenticated, async (req, res) => {
 });
 
 router.get('/user-reviews', ensureAuthenticated, async (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
   try {
     const reviewIDs = await getUserReviewIds(req.user.userID);
     res.json({ reviewIDs });
   } catch (err) {
     res.status(500).json({ error: 'Failed to fetch review IDs' });
   }
+  return null;
 });
 
 export default router;

@@ -1,5 +1,6 @@
 import express from 'express';
 import multer from 'multer';
+
 import { ensureAuthenticated } from '../middleware/authMiddleware.js';
 import { addFilm } from '../database/filmdb.js';
 
@@ -10,11 +11,9 @@ router.get('/add-film', ensureAuthenticated, (req, res) => {
   res.render('add-film', { user: req.user });
 });
 
-
 router.post('/add-film', upload.single('coverimage'), ensureAuthenticated, async (req, res) => {
-  const { title, releaseyear, description, genre } = req.body;
+  const { title, releaseyear, description, genre, userId } = req.body;
   const coverimage = req.file ? req.file.filename : null;
-  const userId = req.user.userID;
 
   if (!title || !releaseyear || !description || !genre) {
     req.flash('error', 'Error: Missing field');

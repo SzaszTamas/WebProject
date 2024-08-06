@@ -41,36 +41,6 @@ export const searchFilms = async (title, genre, minYear, maxYear) => {
   }
 };
 
-export const getFilmById = async (filmId) => {
-  try {
-    const pool = getPool();
-    const result = await pool.request().input('filmId', sql.Int, filmId).query(`
-        SELECT
-          f.filmID,
-          f.title,
-          f.releaseYear,
-          f.description,
-          f.genre,
-          f.coverImage,
-          (SELECT AVG(r.rating) FROM reviews r WHERE r.filmID = f.filmID) AS averageRating,
-          ISNULL((
-            SELECT STUFF((
-              SELECT ', ' + CONVERT(NVARCHAR(5), r.rating) + ': ' + r.review
-              FROM reviews r
-              WHERE r.filmID = f.filmID
-              FOR XML PATH('')
-            ), 1, 2, '')
-          ), '') AS reviews
-        FROM films f
-        WHERE f.filmID = @filmId
-      `);
-    return result.recordset[0] || null;
-  } catch (err) {
-    console.error('Error getting film by ID:', err);
-    throw err;
-  }
-};
-
 export const deleteReviewById = async (filmId, reviewIndex) => {
   const pool = await getPool();
   let transaction;
