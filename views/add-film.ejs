@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+<body>
+  <main>
+    <a href="/" id="home">Home</a>
+    <%- include('partials/header') %>
+    <% if (messages.success) { %>
+      <p class="success"><%= messages.success %></p>
+    <% } %>
+    <% if (messages.error) { %>
+      <p class="error"><%= messages.error %></p>
+    <% } else { %>
+      <form id="add-film" action="/add-film" method="post" enctype="multipart/form-data">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br><br>
+        <label for="releaseyear">Release Year:</label>
+        <input type="number" id="releaseyear" name="releaseyear" required><br><br>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea><br><br>
+        <label for="genre">Genre:</label>
+        <input type="text" id="genre" name="genre" required><br><br>
+        <label for="coverimage">Cover Image:</label>
+        <input type="file" id="coverimage" name="coverimage"><br><br>
+        <button type="submit" value="Add Film">Add Film</button>
+      </form>
+    <% } %>
+  </main>
+</body>
+</html>

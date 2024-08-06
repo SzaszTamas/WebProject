@@ -1,0 +1,10 @@
+  <header>
+    <% if (user) { %>
+      <input type="hidden" name="userId" value="<%= user.userID %>">
+      <p>Welcome, <%= user.username %></p>
+      <a href="/logout">Logout</a>
+    <% } else { %>
+      <input type="hidden" name="userId" value=0>
+      <a href="/login">Login</a>
+    <% } %>
+  </header>

@@ -1,0 +1,28 @@
+<%- include('partials/head') %>
+<body>
+  <header>
+    <h1><%= film.title %> (<%= film.releaseYear %>)</h1>
+  </header>
+  <main>
+    <div class="film-detail">
+      <img src="<%= film.coverImage %>" alt="Film Cover Image" height="320" width="240">
+      <div class="film-info">
+        <p>Genre: <%= film.genre %></p>
+        <p>Plot: <%= film.description %></p>
+        <div class="reviews">
+          <h3>Reviews:</h3>
+          <% if (Array.isArray(film.reviews) && film.reviews.length > 0) { %>
+            <ul>
+              <% film.reviews.forEach(function(review) { %>
+                <li><%= review.review %> - <%= review.rating %> stars</li>
+              <% }); %>
+            </ul>
+          <% } else { %>
+            <p>No reviews available.</p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

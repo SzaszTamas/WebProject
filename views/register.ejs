@@ -1,0 +1,19 @@
+<%- include('partials/head') %>
+<body>
+    <main>
+        <a href="/" id="home">Home</a>
+        <% if (messages.success) { %>
+            <p class="success"><%= messages.success %></p>
+        <% } %>
+        <% if (messages.error) { %>
+            <p class="error"><%= messages.error %></p>
+        <% } %>
+        <form action="/register" method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Register</button>
+        </form>
+    </main>
+</body> 

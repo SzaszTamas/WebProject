@@ -1,0 +1,29 @@
+<%- include('partials/head') %>
+<body>
+  <main>
+    <a href="/" id="home">Home</a>
+    <%- include('partials/header') %>
+    <form id="search-form" action="/search-films">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title"><br><br>
+      <label for="genre">Genre:</label>
+      <input type="text" id="genre" name="genre"><br><br>
+      <label for="min-year">Minimum Release Year:</label>
+      <input type="number" id="min-year" name="minYear"><br><br>
+      <label for="max-year">Maximum Release Year:</label>
+      <input type="number" id="max-year" name="maxYear"><br><br>
+      <% if (user) { %>
+        <input id="myuserID" type="hidden" name="userId" value="<%= user.userID %>">
+      <% } else { %>
+        <input id="myuserID" type="hidden" name="userId" value=0>
+      <% } %>
+      <button type="submit">Search Films</button>
+    </form>
+
+    <section></section>
+    
+    <script src="/scripts/main.js"></script>
+    
+  </main>
+</body>
+</html>
